@@ -1,15 +1,14 @@
 import requests
-import random
 
-api_key = "fq1HNI8Sq9YgAVksiagtpslP08g1HNba"  
+search_term = input("Введіть слово, яке ви хочете знайти на Giphy: ")
 
-search_query = input("Введіть слово для пошуку: ")
-
-url = f"https://api.giphy.com/v1/gifs/search?api_key={api_key}&q={search_query}&limit=1"
-
+api_key = "YOUR API KEY"
+url = f"https://api.giphy.com/v1/gifs/search?api_key={api_key}&q={search_term}&limit=5"
 response = requests.get(url)
 
-data = response.json()
-
-for gif in data["data"]:
-    print(gif["url"])
+if response.status_code == 200:
+    data = response.json()["data"]
+    for gif in data:
+        print(gif["url"])
+else:
+    print(f"Сталася помилка {response.status_code} при отриманні GIF-зображень.")
